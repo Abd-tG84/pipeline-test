@@ -45,6 +45,8 @@ jobs:
     if: needs.job1.result != 'failure'
     steps:
       - name: Step 2
+        env:
+          JOB1_OUTCOME: ${{ needs.job1.result }}
         run: |
           echo "This is Step 2"
-          echo needs.job1.result
+          echo "Job 1 outcome: $JOB1_OUTCOME"
