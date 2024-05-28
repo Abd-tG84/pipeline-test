@@ -26,15 +26,19 @@ jobs:
         run: rm text.txt
         continue-on-error: true
       - name: Next Step
+        env:
+          STEP1_OUTCOME: ${{ steps.step1.outcome }}
         if: steps.step1.outcome != 'failure'
         run: | 
           echo "This is the next step"
-          echo steps.step1.outcome
+          echo "Step 1 outcome: $STEP1_OUTCOME"
       - name: Post Step
+        env:
+          STEP1_OUTCOME: ${{ steps.step1.outcome }}
         if: steps.step1.outcome == 'failure'
         run: | 
           echo "This is the post step"
-          echo steps.step1.outcome
+          echo "Step 1 outcome: $STEP1_OUTCOME"
   job2:
     needs: [job1]
     runs-on: ubuntu-latest
