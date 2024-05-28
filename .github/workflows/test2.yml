@@ -25,19 +25,19 @@ jobs:
         id: step1
         run: |
           echo "success patern"
-          echo "JOB1_RESULT=Job 1 result" >> $GITHUB_ENV
+          
         continue-on-error: true
       - name: Next Step
         env:
           STEP1_OUTCOME: ${{ steps.step1.outcome }}
-        if: steps.step1.outcome != 'failure'
+        if: steps.step1.outcome != 'success'
         run: | 
           echo "This is the next step"
           echo "Step 1 outcome: $STEP1_OUTCOME"
       - name: Post Step
         env:
           STEP1_OUTCOME: ${{ steps.step1.outcome }}
-        if: steps.step1.outcome == 'failure'
+        if: steps.step1.outcome == 'success'
         run: | 
           echo "This is the post step"
           echo "Step 1 outcome: $STEP1_OUTCOME"
@@ -51,5 +51,5 @@ jobs:
           JOB1_OUTCOME: ${{ needs.job1.result }}
         run: |
           echo "This is Step 2"
-          echo "Job 1 outcome: $JOB1_OUTCOME"
+          echo "Using variable from job1: ${{ needs.job1.outputs.STEP1_OUTCOME }}"
           echo $JOB1_RESULT
