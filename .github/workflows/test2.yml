@@ -25,7 +25,7 @@ jobs:
         id: step1
         run: |
           echo "success patern"
-          echo "::set-env name=JOB1_RESULT::Job 1 result"
+          echo "JOB1_RESULT=Job 1 result" >> $GITHUB_ENV
         continue-on-error: true
       - name: Next Step
         env:
@@ -52,4 +52,4 @@ jobs:
         run: |
           echo "This is Step 2"
           echo "Job 1 outcome: $JOB1_OUTCOME"
-          echo "Job 1 result is ${{ env.JOB1_RESULT }}"
+          echo $JOB1_RESULT
