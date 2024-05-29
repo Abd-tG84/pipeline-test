@@ -29,7 +29,6 @@ jobs:
       run: |
         echo "list=[dog, cat, bird]" >> $GITHUB_ENV
         echo list
-        ${{ steps.print_list.outputs.stdout }} = [dog, cat, bird]
 
     - name: Check for 'cat'
       id: check_cat
