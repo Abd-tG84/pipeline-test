@@ -18,7 +18,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     outputs:
-      step1Outcom: ${{ steps.step1.outputs.outcome }}
+      step1Outcom: ${{ steps.step1.outcome }}
     steps:
       - name: Step 1
         id: step1
