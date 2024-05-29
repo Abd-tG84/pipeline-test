@@ -31,8 +31,8 @@ jobs:
     - name: Check for 'cat'
       id: check_cat
       run: |
-        myList=${{ steps.print_list.outputs.list }}
-        if echo "$myList" | grep -q 'cat'; then
+        myList="${{ steps.print_list.outputs.list }}"
+        if python3 -c "import sys; print('${myList}'.count('cat') > 0)" | grep -q "True"; then
           echo "cat is present in the list"
           echo "::set-output name=cat_present::true"
         else
