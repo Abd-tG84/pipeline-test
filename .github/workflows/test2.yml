@@ -17,6 +17,8 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    outputs:
+      step1Outcom: ${{ steps.step1.outputs.outcome }}
     steps:
       - name: Step 1
         id: step1
@@ -43,12 +45,8 @@ jobs:
     needs: [job1]
     runs-on: ubuntu-latest
     if: needs.job1.result != 'failure'
-    env:
-      JOB1_RESULT: ${{ needs.job1.result }}
-      STEP1_RESULT: ${{ needs.job1.outputs.STEP1_OUTCOME }}
     steps:
       - name: Step 2
         run: |
           echo "This is Step 2"
-          echo "Job 1 result: $JOB1_RESULT"
-          echo "Step 1 outcome: $STEP1_RESULT"
+          echo ${{needs.job1.outputs.step1Outcom}}
