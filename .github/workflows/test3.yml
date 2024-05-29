@@ -30,7 +30,9 @@ jobs:
         echo "List: [dog, cat, bird]"
 
     - name: Check for 'cat'
+      env:
+        PRINT_LIST_OUTCOME: ${{ steps.print_list.outputs.stdout }}
       id: check_cat
       run: |
-        echo ${{ steps.print_list.outputs.stdout }}
+        echo "print list: ${{ env.PRINT_LIST_OUTCOME }}"
         
