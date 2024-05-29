@@ -33,11 +33,11 @@ jobs:
       id: check_cat
       run: |
         myList="${{ steps.print_list.outputs.stdout }}"
-        if python3 -c "import sys, json; print('cat' in json.loads('${myList}'))"; then
+        if python -c "import sys, json; print('cat' in json.loads('${myList}'))"; then
           echo "cat is present in the list"
-          echo "cat_present=true" >> $GITHUB_ENV
+          echo "::set-output name=cat_present::true"
         else
           echo "cat is not present in the list"
-          echo "cat_present=false" >> $GITHUB_ENV
+          echo "::set-output name=cat_present::false"
         fi
         
