@@ -27,17 +27,18 @@ jobs:
     - name: Print List
       id: print_list
       run: |
-        echo '["dog", "cat", "bird"]'
+        echo '["dog", "cat", "bird"]' >> $GITHUB_ENV
+        echo "List: [dog, cat, bird]"
 
     - name: Check for 'cat'
       id: check_cat
       run: |
-        myList="${{ steps.print_list.outputs.stdout }}"
-        if python -c "import sys, json; print('cat' in json.loads('${myList}'))"; then
+        myList="${{ env.list }}"
+        if python3 -c "import sys, json; json.loads(sys.argv[1]) and 'cat' in json.loads(sys.argv[1])" "${myList}"; then
           echo "cat is present in the list"
-          echo "::set-output name=cat_present::true"
+          echo "cat_present=true" >> $GITHUB_ENV
         else
           echo "cat is not present in the list"
-          echo "::set-output name=cat_present::false"
+          echo "cat_present=false" >> $GITHUB_ENV
         fi
         
