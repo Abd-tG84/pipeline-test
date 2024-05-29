@@ -27,7 +27,6 @@ jobs:
     - name: Print List
       id: print_list
       run: |
-        echo '[dog, cat, bird]' >> $GITHUB_ENV
         echo "List: [dog, cat, bird]"
 
     - name: Check for 'cat'
