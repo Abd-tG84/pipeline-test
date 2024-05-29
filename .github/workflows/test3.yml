@@ -26,21 +26,27 @@ jobs:
 
     - name: Print List
       id: print_list
-      run: echo "list=[dog, cat, bird]" >> $GITHUB_ENV
+      run: |
+        echo "list=[dog, cat, bird]" >> $GITHUB_ENV
+        echo "List: [dog, cat, bird]"
 
     - name: Check for 'cat'
       id: check_cat
       run: |
-        myList=${list}
+        myList=${{ env.list }}
         if python3 -c "import sys; print('${myList}'.count('cat') > 0)"; then
-          echo "cat is present in the list"
+          echo "The list contains 'cat'"
           echo "cat_present=true" >> $GITHUB_ENV
         else
-          echo "cat is not present in the list"
+          echo "The list does not contain 'cat'"
           echo "cat_present=false" >> $GITHUB_ENV
         fi
 
     - name: Use Output Variable
       run: |
-        catPresent=$cat_present
-        echo "The value of cat_present is $catPresent"
+        catPresent=${{ env.cat_present }}
+        if [[ "$catPresent" == "true" ]]; then
+          echo "The value of cat_present is true - 'cat' is present in the list"
+        else
+          echo "The value of cat_present is false - 'cat' is not present in the list"
+        fi
