@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check-list:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Print List
+      id: print_list
+      run: echo "::set-output name=list::[dog, cat, bird]"
+
+    - name: Check for 'cat'
+      id: check_cat
+      run: |
+        myList=${{ steps.print_list.outputs.list }}
+        if echo "$myList" | grep -q 'cat'; then
+          echo "cat is present in the list"
+          echo "::set-output name=cat_present::true"
+        else
+          echo "cat is not present in the list"
+          echo "::set-output name=cat_present::false"
+        fi
