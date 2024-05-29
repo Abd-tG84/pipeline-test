@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Step 1
         id: step1
-        run: rm text.txt
+        run: exit 1
         continue-on-error: true
       - name: Next Step
         env:
