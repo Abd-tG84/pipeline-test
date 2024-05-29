@@ -49,3 +49,17 @@ jobs:
         run: |
           echo "This is Step 2"
           echo "Job 1 outcome: ${{needs.job1.outputs.step1Outcom}}"
+      - name: Next Step
+        env:
+          STEP1_OUTCOME: ${{ steps.step1.outcome }}
+        if: needs.job1.outputs.step1Outcom != 'failure'
+        run: | 
+          echo "This is the next step"
+          echo "Step 1 outcome: ${{needs.job1.outputs.step1Outcom}}"
+      - name: Post Step
+        env:
+          STEP1_OUTCOME: ${{ steps.step1.outcome }}
+        if: needs.job1.outputs.step1Outcom == 'failure'
+        run: | 
+          echo "This is the post step"
+          echo "Step 1 outcome: ${{needs.job1.outputs.step1Outcom}}"
